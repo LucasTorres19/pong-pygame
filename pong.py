@@ -19,7 +19,6 @@ class jugadores(pygame.sprite.Sprite):
         self.rect = self.sprite.get_rect()
         self.rect.centerx =  x
         self.rect.centery = h/2
-        self.posY = (h/2 - 20)
         self.speed = 15
 
 class pelota(pygame.sprite.Sprite):
@@ -45,8 +44,8 @@ class pelota(pygame.sprite.Sprite):
                 self.rect.centery += self.speed[1] * time
             
             if pygame.sprite.collide_rect(self,player1) or pygame.sprite.collide_rect(self,player2):
-                self.speed[1]= -self.speed[1]
-                self.rect.centerx += self.speed[1] * time   
+                self.speed[0]= -self.speed[0]
+                self.rect.centerx += self.speed[0] * time   
             
 #Funciones.
 def main():
@@ -73,20 +72,19 @@ def main():
         teclado = pygame.key.get_pressed()
         
         if teclado[pygame.K_UP]:
-            player2.posY -= player2.speed
+            player2.rect.centery -= player2.speed
         elif teclado[pygame.K_DOWN]:
-            player2.posY += player2.speed
+            player2.rect.centery+= player2.speed
         elif teclado[pygame.K_w]:
-            player.posY -= player.speed
+            player.rect.centery -= player.speed
         elif teclado[pygame.K_s]:
-            player.posY += player.speed
-      
+            player.rect.centery += player.speed
       
         
         bola.mover(time,player,player2)
         #dibus
-        pantalla.blit(player.sprite,(10,(player.posY)))
-        pantalla.blit(player2.sprite, (780,player2.posY))
+        pantalla.blit(player.sprite,player.rect)
+        pantalla.blit(player2.sprite,player2.rect)
         pantalla.blit(bola.sprite,(bola.rect.centerx,bola.rect.centery))
         
            
